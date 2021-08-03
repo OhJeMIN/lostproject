@@ -10,15 +10,18 @@ router.post('/', function(req, res, next) {
 });
 
 router.post('/signup', function(req, res, next){
-    res.status(201).json('"messeage" : "success"');
+    username= req.body.user_id;
+    password = req.body.user_password;
+    type = req.body.signup_type;    
+    res.status(201).json("id:"+username+","+"pw:"+password+","+"type:"+type);  
 });
 
-router.post('/signup', function(req, res, next){
+router.post('/signin', function(req, res, next){
     res.status(201).json('"messeage" : "success"');
 });
 
 router.post('/state', function(req, res, next){
-    res.status(201).json('"messeage" : "success"');
+    res.status(201).json('"messeage" : "1"');
 });
 
 module.exports = router;
