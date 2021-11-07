@@ -6,7 +6,7 @@ var crypto = require('crypto')
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const AccountRouter = require('./routes/Account');
+const AccountRouter = require('./routes/Account');   
 const DashboardRouter = require('./routes/Dashboard');
 const bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
@@ -37,8 +37,7 @@ const passport = require('passport')
 const router = require('./routes/index');
 
 
-passport.serializeUser(function(user, done) {
-  console.log(3);
+passport.serializeUser(function(user, done) {  
   done(null, user.username);
 });
 
@@ -90,7 +89,7 @@ passport.use(new LocalStrategy(
             issuer: "id"
           });
           result[0]["Token"] = token; // 생성한 토큰을 result에다가 넣어주기
-          done(null, result);
+          done(null, result);   // 나중에 토큰은 헤더에 넣기 
         }
         else{
           return done(null, false, {message: "password wrong"});
@@ -128,7 +127,7 @@ app.post('/Account/signin', async function(req, res, next){
 
 app.post('/Account/state', function(req, res) {
   if(verifyJsonWebToken(request_token)) {
-    doApiJob();
+    doApiJob(); //사용자가 전달한 JWT를 검증해서 맞으면 API의 작업을 수행하고 아니면 에러 메시지를 전달할 겁니다.
 } else {
     res.send('token is invalid')
 }
@@ -140,6 +139,7 @@ app.get('/logout', function(req,res){
     res.redirect('/');
   });
 });
+
 
 app.use(passport.initialize());
 app.use(passport.session());
